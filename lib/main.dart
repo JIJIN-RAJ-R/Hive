@@ -52,7 +52,7 @@ class _HomePageState extends State<HomePage> {
   void _refreshItems() {
     final data = _shoppingBox.keys.map((key) {
       final value = _shoppingBox.get(key);
-      return {"key": key, "name": value["name"], "quantity": value['quantity']};
+      return {"key": key, "name": value["name"], "contact": value['contact']};
     }).toList();
 
     setState(() {
@@ -84,12 +84,12 @@ class _HomePageState extends State<HomePage> {
     // Display a snackbar
     if (!mounted) return;
     ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('An item has been deleted')));
+        const SnackBar(content: Text('Delete succefully !!!')));
   }
 
   // TextFields' controllers
   final TextEditingController _nameController = TextEditingController();
-  final TextEditingController _quantityController = TextEditingController();
+  final TextEditingController _contactController = TextEditingController();
 
   // This function will be triggered when the floating button is pressed
   // It will also be triggered when you want to update an item
@@ -101,7 +101,7 @@ class _HomePageState extends State<HomePage> {
       final existingItem =
           _items.firstWhere((element) => element['key'] == itemKey);
       _nameController.text = existingItem['name'];
-      _quantityController.text = existingItem['quantity'];
+      _contactController.text = existingItem['contact'];
     }
 
     showModalBottomSheet(
@@ -126,9 +126,9 @@ class _HomePageState extends State<HomePage> {
                     height: 10,
                   ),
                   TextField(
-                    controller: _quantityController,
+                    controller: _contactController,
                     keyboardType: TextInputType.number,
-                    decoration: const InputDecoration(hintText: 'Quantity'),
+                    decoration: const InputDecoration(hintText: 'contact'),
                   ),
                   const SizedBox(
                     height: 20,
@@ -139,7 +139,7 @@ class _HomePageState extends State<HomePage> {
                       if (itemKey == null) {
                         _createItem({
                           "name": _nameController.text,
-                          "quantity": _quantityController.text
+                          "contact": _contactController.text
                         });
                       }
 
@@ -147,13 +147,13 @@ class _HomePageState extends State<HomePage> {
                       if (itemKey != null) {
                         _updateItem(itemKey, {
                           'name': _nameController.text.trim(),
-                          'quantity': _quantityController.text.trim()
+                          'contact': _contactController.text.trim()
                         });
                       }
 
                       // Clear the text fields
                       _nameController.text = '';
-                      _quantityController.text = '';
+                      _contactController.text = '';
 
                       Navigator.of(context).pop(); // Close the bottom sheet
                     },
@@ -172,7 +172,7 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          'PROJECT',
+          'HIVE',
           style: TextStyle(fontSize: 33, fontWeight: FontWeight.w700),
         ),
       ),
@@ -189,12 +189,12 @@ class _HomePageState extends State<HomePage> {
               itemBuilder: (_, index) {
                 final currentItem = _items[index];
                 return Card(
-                  color: Colors.orange.shade100,
+                  color: Colors.green.shade200,
                   margin: const EdgeInsets.all(10),
                   elevation: 3,
                   child: ListTile(
-                      title: Text(currentItem['name']),
-                      subtitle: Text(currentItem['quantity'].toString()),
+                      title: Text(currentItem['name'],style: TextStyle(fontWeight: FontWeight.w900),),
+                      subtitle: Text(currentItem['contact'].toString()),
                       trailing: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
